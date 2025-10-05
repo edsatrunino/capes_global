@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparação de Justificativas e Objetivos - Temas CAPES Global</title>
+    <style>
+        /* Reset e Estilos Básicos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #667eea;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #555;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+            color: #667eea;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #667eea;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .theme-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-card h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .theme-card p {
+            color: #333;
+            text-align: justify;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        /* Tab Content Animation */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Theme Specific Colors */
+        .theme-1 h3 {
+            color: #e74c3c;
+        }
+
+        .theme-1::before {
+            background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .theme-2 h3 {
+            color: #27ae60;
+        }
+
+        .theme-2::before {
+            background: linear-gradient(90deg, #27ae60 0%, #229954 100%);
+        }
+
+        .theme-3 h3 {
+            color: #3498db;
+        }
+
+        .theme-3::before {
+            background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .scroll-indicator {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Comparação de Temas - CAPES Global</h1>
+            <p>Justificativas e Objetivos dos Três Temas Estratégicos</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('justificativas', this)">
+                📋 Justificativas
+            </button>
+            <button class="tab" onclick="showTab('objetivos', this)">
+                🎯 Objetivos
+            </button>
+        </div>
+
+        <div class="content">
+            <!-- TAB: JUSTIFICATIVAS -->
+            <div id="justificativas" class="tab-content active">
+                <h2 class="section-title">Justificativas da Escolha dos Temas</h2>
+                <div class="comparison-grid">
+                    <div class="theme-card theme-1">
+                        <h3>Tema 1 – Transição Energética, Materiais e Tecnologias Limpas</h3>
+                        <p>
+                            A Rede concentra esforços em “Transição Energética, Materiais e Tecnologias Limpas” por reunir competências complementares com alto potencial transformador: eletrônica de potência, geração distribuída e armazenamento; química de materiais, catálise e biorrefinaria; engenharia ambiental e de recursos hídricos; edificações e cidades; manufatura e sistemas mecânicos. Essa combinação permite enfrentar desafios nacionais — eficiência energética em edificações, descarbonização de processos, segurança hídrica em bacias críticas, valorização de resíduos e economia circular — conectando pesquisa fundamental, desenvolvimento tecnológico e validação em campo.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            A diversidade institucional da Rede constitui ativo estratégico: programas consolidados e programas em ascensão, distribuídos em diferentes regiões, compartilham infraestrutura, orientação e redes internacionais, acelerando a formação de recursos humanos e ampliando o alcance territorial das soluções. As colaborações internacionais já estabelecidas e em prospecção funcionam como multiplicadores de capacidades — acesso a técnicas e equipamentos, coorientações, missões técnicas e projetos conjuntos — encurtando o ciclo entre concepção, protótipo e adoção.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            A escolha do tema dialoga com agendas estruturantes do país: transição energética justa, reindustrialização de baixo carbono, bioeconomia e redução de assimetrias regionais. Também se alinha às ODS 6 (água e saneamento), 7 (energia limpa e acessível), 9 (indústria, inovação e infraestrutura), 11 (cidades sustentáveis), 12 (consumo e produção responsáveis) e 13 (ação climática). Em síntese, a articulação proposta combina capacidades científicas e tecnológicas para gerar resultados de alto impacto público, econômico e ambiental.
+                        </p>
+                    </div>
+
+                    <div class="theme-card theme-2">
+                        <h3>Tema 2 – Produção Sustentável e Segurança Alimentar</h3>
+                        <p>
+                            A produção sustentável de alimentos e a segurança alimentar das populações enfrentam muitos desafios associados às mudanças climáticas globais em curso. O aumento das temperaturas globais tem provocado mudanças fisiológicas nas plantas, no solo e no ciclo das águas. Adicionalmente, eventos climáticos extremos, como secas e excesso de chuvas, entre outros, tem sido cada vez mais frequentes e de baixa previsibilidade. Todos estes fatores têm impactos negativos nos sistemas de produção agropecuários.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            Mudanças já são percebidas, em especial, em regiões semiáridas, facilmente inundáveis e de terras altas, inclusive agravando as crises humanitárias: falta de alimentos, migrações forçadas, perdas de patrimônio e até mortes humanas. Mesmo países de economia emergente – vias de desenvolvimento ou do Norte Global já estão sofrendo as consequências de picos extremos de temperatura e mudanças no regime hídrico. As atividades agropecuárias da região Sul do Brasil, cujo clima subtropical úmido já tem elevada amplitude térmica anual (verões quentes e invernos frios) e chuvas distribuídas durante o ano, também têm enfrentado eventos de estiagens e de altas temperaturas causando desastres agroambientais, com reflexos desastrosos sobre a socioeconomia.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            A resiliência dos agroecossistemas a estes desafios depende de respostas que envolvem três abordagens essenciais: i) avaliação precisa e detalhada dos atuais e futuros impactos das mudanças climáticas nos agroecossistemas; ii) o desenvolvimento de estratégias de mitigação dos fatores que contribuem para as mudanças climáticas e que que estão associadas aos agroecossistemas e iii) desenvolvimento e difusão de estratégias de adaptação dos agroecossistemas frente às mudanças climáticas. A proposta de internacionalização acadêmico-científica está inserida neste contexto e envolve a participação de diferentes PPG da UFSM e Instituições parceiras que atuam em temas inerentes em pelo menos uma das abordagens descritas acima.
+                        </p>
+                    </div>
+
+                    <div class="theme-card theme-3">
+                        <h3>Tema 3 – Saúde Global Integrada</h3>
+                        <p>
+                            O conhecimento em Saúde Global Integrada une ciência, prática e cooperação internacional para enfrentar desafios que transcendem fronteiras, promovendo equidade, bem-estar e sustentabilidade. Envolve uma abordagem transdisciplinar que integra de forma indissociável a saúde humana, animal e ambiental, promovendo inovação pela colaboração entre diferentes áreas do conhecimento e consolidando uma visão conjunta essencial para garantir níveis elevados de saúde individual e coletiva.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            A integração de múltiplas expertises é fundamental para compreender determinantes da saúde global, nesse sentido a proposta integra 19 PPGs de 4 instituições federais distribuídos por 4 unidades federativas compondo uma rede com o objetivo de gerar conhecimento no tema proposto. A inovação em fármacos, segurança alimentar, atenção integral à saúde, promoção do bem-estar, conservação da biodiversidade somada à investigação de mecanismos moleculares e toxicológicos estruturam um eixo central para a saúde em escala local e global.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            Estratégias consistentes de promoção da saúde global exigem essa perspectiva transdisciplinar, abrangendo aspectos toxicológicos, farmacológicos, nutricionais e ambientais, bem como dimensões de bem-estar e percepção do indivíduo. Nesse contexto, a reflexão ética e humanística é indispensável para decisões responsáveis e sustentáveis. A investigação conceitual, ética e social da saúde, em diálogo com a filosofia, pode atuar como metadisciplina ao examinar criticamente pressupostos das ciências da saúde e oferecer base humanizada para o cuidado em um mundo globalizado. Assim, a Saúde Global Integrada destaca-se por articular diferentes áreas, promovendo estratégias de prevenção, cuidado e sustentabilidade, essenciais para a qualidade de vida e a equidade. Nesse horizonte, a cidadania torna-se central, pois o engajamento responsável de indivíduos e comunidades é indispensável para consolidar práticas sustentáveis e assegurar o direito à saúde como bem comum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: OBJETIVOS -->
+            <div id="objetivos" class="tab-content">
+                <h2 class="section-title">Objetivos da Internacionalização</h2>
+                <div class="comparison-grid">
+                    <div class="theme-card theme-1">
+                        <h3>Tema 1 – Transição Energética, Materiais e Tecnologias Limpas</h3>
+                        <p>
+                            <strong>Estratégia organizada em três eixos, com metas verificáveis:</strong>
+                        </p>
+                        <p style="margin-top: 15px;">
+                            <strong>1. Ciência em rede de alto desempenho.</strong> Consolidar e abrir colaborações para: (i) dispositivos e controle para energia limpa (PPGEE/UFSM; PGMEC/UFSM); (ii) catálise, biorrefinaria e materiais funcionais (PPGEQ/UFSM; PPGQ/UFSM; PPGQ/UEPB; PPGQTA/IFMT); (iii) soluções baseadas na natureza, pavimentos permeáveis e saneamento (PPGECAM/UFSM); (iv) cidade inteligente com FV integrado e projeto ambiental urbano (PPGAUP/UFSM; parceria SUPSI-ISAAC); (v) governança e qualidade da água em bacias estratégicas (ProfÁgua/UFT). Produtos esperados: artigos em coautoria internacional, patentes/softwares, bases de dados abertas e guias técnicos.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            <strong>2. Formação em ambientes globais.</strong> Ampliar cotutelas e estágios-sanduíche; atrair professores visitantes sênior/júnior e bolsistas de doutorado sanduíche; realizar missões no exterior para capacitar o corpo docente dos PPGs; reduzir assimetrias regionais no que tange a internacionalização; expandir disciplinas e defesas em inglês; promover "internacionalização em casa" (ciclos de seminários, projetos colaborativos remotos), com capacitação em propriedade intelectual, ciência aberta e transferência de tecnologia.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            <strong>3. Impacto no território.</strong> Implementar "living labs" em cidades e bacias: FV integrado e eficiência em edificações; pavimentos/drenagem urbana; monitoramento e gestão da qualidade da água; valorização de resíduos e biorrefinaria em cadeias produtivas regionais. Entregáveis: protótipos, notas técnicas, recomendações a órgãos públicos e soluções demonstradas com parceiros.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            <strong>Indicadores de acompanhamento:</strong> acordos ativos, mobilidade (entradas/saídas), coautorias internacionais, protótipos/pedidos de PI/softwares, formação de RH e ações de extensão. Contribuições alinhadas às ODS 6, 7, 9, 11, 12 e 13 e às prioridades brasileiras de desenvolvimento sustentável e reindustrialização de baixo carbono.
+                        </p>
+                    </div>
+
+                    <div class="theme-card theme-2">
+                        <h3>Tema 2 – Produção Sustentável e Segurança Alimentar</h3>
+                        <p>
+                            <strong>Acadêmicos</strong>
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (a) Formação de recursos humanos com instituições estrangeiras, especialmente, em regime de cotutela/dupla titulação;
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (b) Ampliar a atração de candidatos estrangeiros, especialmente, do continente africano, América Latina e dos países BRICS, inscritos nos processos seletivos dos PPG;
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (c) Impulsionar a atuação – credenciamento de docentes brasileiros em Escolas Doutorais das instituições estrangeiras e vice-versa;
+                        </p>
+                        <p style="margin-top: 15px;">
+                            <strong>Científicos</strong>
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (a) Fomentar a comunidade dos PPG, docentes e estudantes, na elaboração/participação de projetos de pesquisa a serem submetidos em órgãos de fomento internacional;
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (b) Conduzir pesquisas compartilhadas/colaborativas e desenvolver atividades de difusão, ensino e comunicação com grupos/instituições em nível global que atuam no tema produção sustentável e segurança alimentar, a partir das mudanças climáticas;
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (c) Proporcionar treinamento científico-acadêmico e capacitar docentes e discentes em ações internacionais de ensino e pesquisa, envolvendo as distintas realidades da produção sustentável e da segurança alimentar em nível local, regional, nacional e internacional;
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (d) Difundir e estabelecer sinergia e/ou complementaridade entre as equipes internacionais que atuam em áreas de interesse comum, como diagnóstico de agroecossistemas, desenvolvimento de tecnologias e formação de recursos humanos;
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (e) Aumentar o grau de internacionalização e a produção científica dos PPGs com colaboração internacional;
+                        </p>
+                        <p style="margin-top: 15px;">
+                            <strong>Socioambientais</strong>
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (a) Estabelecer uma rede de pesquisa internacional para compreender capacidade de resiliência dos agricultores e agroecossistemas, frente as mudanças climáticas;
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (b) Propor pesquisas colaborativas para compreender os impactos gerados a partir de mudanças climáticas frente a segurança alimentar nas populações atingidas;
+                        </p>
+                        <p style="margin-top: 10px;">
+                            (c) Criar banco de dados unificados sobre os impactos das mudanças climáticas e segurança alimentar nas populações, no contexto nacional e internacional, fomentando a elaboração de uma rede colaborativa de trabalhos.
+                        </p>
+                    </div>
+
+                    <div class="theme-card theme-3">
+                        <h3>Tema 3 – Saúde Global Integrada</h3>
+                        <p>
+                            A internacionalização em Saúde Global Integrada busca ampliar o impacto acadêmico, científico e social dos programas envolvidos, consolidando uma rede colaborativa de caráter global. No âmbito acadêmico, objetiva-se qualificar a formação de pesquisadores por meio de experiências multiculturais, estágios no exterior, coorientações e intercâmbio de docentes e discentes, fortalecendo a visão transdisciplinar necessária para enfrentar desafios complexos em saúde.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            Cientificamente, a internacionalização possibilitará o desenvolvimento conjunto de pesquisas inovadoras, a adoção de metodologias avançadas e o acesso a tecnologias de ponta, além de ampliar a produção científica de alto impacto com coautorias internacionais. A aproximação com centros de excelência estrangeiros acelerará a transferência de conhecimento e a criação de soluções mais abrangentes, integrando perspectivas regionais e globais em torno da saúde animal, humana e ambiental.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            Na inserção social, favorecerá maior visibilidade e circulação do conhecimento produzido, estimulando práticas sustentáveis, farmacológicas, nutricionais e de promoção da saúde em diferentes contextos socioculturais. O fortalecimento de laços internacionais permitirá desenvolver projetos de extensão e difusão científica voltados à comunidade, promovendo a internacionalização do ambiente acadêmico dos Programas de Pós-Graduação e incentivando a participação em redes globais sobre saúde, sustentabilidade e equidade.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            Assim, a internacionalização ampliará a capacidade de articular saberes e consolidará os programas envolvidos como protagonistas no avanço científico e social em saúde global, reduzindo assimetrias na produção e colaboração internacional. Nesse contexto, a cidadania global emerge como valor essencial, estimulando corresponsabilidade de indivíduos e instituições na construção de soluções compartilhadas, solidárias e sustentáveis para desafios que ultrapassam fronteiras geográficas e culturais.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 CAPES Global - Comparação de Temas Estratégicos</p>
+        </footer>
+    </div>
+
+    <script>
+        function showTab(tabName, clickedButton) {
+            // Esconder todos os conteúdos das tabs
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remover a classe active de todos os botões de tab
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Mostrar o conteúdo da tab selecionada
+            document.getElementById(tabName).classList.add('active');
+
+            // Adicionar a classe active no botão clicado
+            clickedButton.classList.add('active');
+
+            // Scroll suave para o topo do conteúdo
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
